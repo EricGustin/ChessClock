@@ -31,11 +31,11 @@ class ClockViewController: UIViewController {
     return view
   }()
   
-  private var topTimerTimeRemaining = 60
+  private var topTimerTimeRemaining = 60.0
   private var topTimerLabel: UILabel?
   private var topTimer: Timer?
   
-  private var bottomTimerTimeRemaining = 60
+  private var bottomTimerTimeRemaining = 60.0
   private var bottomTimerLabel: UILabel?
   private var bottomTimer: Timer?
   
@@ -82,24 +82,24 @@ class ClockViewController: UIViewController {
   }
   
   @objc func topCounter() {
-    topTimerTimeRemaining -= 1
-    topTimerLabel?.text = "\(topTimerTimeRemaining)"
+    topTimerTimeRemaining -= 0.1
+    topTimerLabel?.text = String(format: "%.1f", topTimerTimeRemaining)
   }
   
   @objc func bottomCounter() {
-    bottomTimerTimeRemaining -= 1
-    bottomTimerLabel?.text = "\(bottomTimerTimeRemaining)"
+    bottomTimerTimeRemaining -= 0.1
+    bottomTimerLabel?.text = String(format: "%.1f", bottomTimerTimeRemaining)
   }
   
   @objc func topCounterClicked() {
     if bottomTimer != nil && bottomTimer!.isValid { return }
-    bottomTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(bottomCounter), userInfo: nil, repeats: true)
+    bottomTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(bottomCounter), userInfo: nil, repeats: true)
     topTimer?.invalidate()
   }
   
   @objc func bottomTimerClicked() {
     if topTimer != nil && topTimer!.isValid { return }
-    topTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(topCounter), userInfo: nil, repeats: true)
+    topTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(topCounter), userInfo: nil, repeats: true)
     bottomTimer?.invalidate()
   }
   
