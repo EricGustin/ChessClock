@@ -56,13 +56,13 @@ class ClockViewController: UIViewController {
     return view
   }()
   
-  var topTimerInitialTime = 60.0
-  private var topTimerTimeRemaining = 60.0
+  var topTimerInitialTime = 10.0
+  private var topTimerTimeRemaining = 10.0
   private var topTimerLabel: UILabel?
   private var topTimer: Timer?
   
-  var bottomTimerInitialTime = 60.0
-  private var bottomTimerTimeRemaining = 60.0
+  var bottomTimerInitialTime = 120.0
+  private var bottomTimerTimeRemaining = 120.0
   private var bottomTimerLabel: UILabel?
   private var bottomTimer: Timer?
   
@@ -156,12 +156,24 @@ class ClockViewController: UIViewController {
   
   @objc func topCounter() {
     topTimerTimeRemaining -= 0.1
-    topTimerLabel?.text = String(format: "%.1f", topTimerTimeRemaining)
+    if topTimerTimeRemaining >= 10 {
+      let minutes = Int(topTimerTimeRemaining / 60)
+      let seconds = Int(topTimerTimeRemaining) % 60
+      topTimerLabel?.text = "\(minutes):\(seconds)"
+    } else {
+      topTimerLabel?.text = String(format: "0:0%.1f", topTimerTimeRemaining)
+    }
   }
   
   @objc func bottomCounter() {
     bottomTimerTimeRemaining -= 0.1
-    bottomTimerLabel?.text = String(format: "%.1f", bottomTimerTimeRemaining)
+    if bottomTimerTimeRemaining >= 10 {
+      let minutes = Int(bottomTimerTimeRemaining / 60)
+      let seconds = Int(bottomTimerTimeRemaining) % 60
+      bottomTimerLabel?.text = "\(minutes):\(seconds)"
+    } else {
+      bottomTimerLabel?.text = String(format: "0:0%.1f", bottomTimerTimeRemaining)
+    }
   }
   
   @objc func topCounterClicked() {
