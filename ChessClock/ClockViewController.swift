@@ -93,12 +93,20 @@ class ClockViewController: UIViewController {
   
   @objc func topCounterClicked() {
     if bottomTimer != nil && bottomTimer!.isValid { return }
+    topBackground.backgroundColor = .brown
+    topTimerLabel?.textColor = .white
+    bottomBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    bottomTimerLabel?.textColor = .black
     bottomTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(bottomCounter), userInfo: nil, repeats: true)
     topTimer?.invalidate()
   }
   
   @objc func bottomTimerClicked() {
     if topTimer != nil && topTimer!.isValid { return }
+    bottomBackground.backgroundColor = .brown
+    bottomTimerLabel?.textColor = .white
+    topBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    topTimerLabel?.textColor = .black
     topTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(topCounter), userInfo: nil, repeats: true)
     bottomTimer?.invalidate()
   }
