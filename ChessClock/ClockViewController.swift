@@ -34,6 +34,7 @@ class ClockViewController: UIViewController {
   
   var pauseButton: UIButton = {
     let button = UIButton()
+    button.isHidden = true
     button.setBackgroundImage(UIImage(systemName: "pause.fill"), for: .normal)
     button.tintColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -88,6 +89,7 @@ class ClockViewController: UIViewController {
     refreshButton.heightAnchor.constraint(equalTo: middleBarBackground.heightAnchor, multiplier: 0.5).isActive = true
     refreshButton.widthAnchor.constraint(equalTo: middleBarBackground.heightAnchor, multiplier: 0.5).isActive = true
     
+    pauseButton.addTarget(self, action: #selector(pauseButtonClicked), for: .touchUpInside)
     middleBarBackground.addSubview(pauseButton)
     pauseButton.centerXAnchor.constraint(equalTo: middleBarBackground.centerXAnchor).isActive = true
     pauseButton.centerYAnchor.constraint(equalTo: middleBarBackground.centerYAnchor).isActive = true
@@ -137,6 +139,7 @@ class ClockViewController: UIViewController {
   
   @objc func topCounterClicked() {
     if bottomTimer != nil && bottomTimer!.isValid { return }
+    pauseButton.isHidden = false
     topBackground.backgroundColor = .brown
     topTimerLabel?.textColor = .white
     bottomBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
@@ -147,12 +150,23 @@ class ClockViewController: UIViewController {
   
   @objc func bottomTimerClicked() {
     if topTimer != nil && topTimer!.isValid { return }
+    pauseButton.isHidden = false
     bottomBackground.backgroundColor = .brown
     bottomTimerLabel?.textColor = .white
     topBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
     topTimerLabel?.textColor = .black
     topTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(topCounter), userInfo: nil, repeats: true)
     bottomTimer?.invalidate()
+  }
+  
+  @objc func pauseButtonClicked() {
+    pauseButton.isHidden = true
+    topTimer?.invalidate()
+    bottomTimer?.invalidate()
+    topBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    bottomBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    topTimerLabel?.textColor = .black
+    bottomTimerLabel?.textColor = .black
   }
   
 }
