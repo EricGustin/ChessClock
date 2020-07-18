@@ -24,6 +24,30 @@ class ClockViewController: UIViewController {
     return view
   }()
   
+  let refreshButton: UIButton = {
+    let button = UIButton()
+    button.setBackgroundImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+    button.tintColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    return button
+  }()
+  
+  var pauseButton: UIButton = {
+    let button = UIButton()
+    button.setBackgroundImage(UIImage(systemName: "pause.fill"), for: .normal)
+    button.tintColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    return button
+  }()
+  
+  let settingsButton: UIButton = {
+    let button = UIButton()
+    button.setBackgroundImage(UIImage(systemName: "gear"), for: .normal)
+    button.tintColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    return button
+  }()
+  
   let bottomBackground: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
@@ -57,7 +81,26 @@ class ClockViewController: UIViewController {
     middleBarBackground.topAnchor.constraint(equalTo: topBackground.bottomAnchor).isActive = true
     middleBarBackground.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     middleBarBackground.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
-  
+    
+    middleBarBackground.addSubview(refreshButton)
+    refreshButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: UIScreen.main.bounds.width*0.2).isActive = true
+    refreshButton.centerYAnchor.constraint(equalTo: middleBarBackground.centerYAnchor).isActive = true
+    refreshButton.heightAnchor.constraint(equalTo: middleBarBackground.heightAnchor, multiplier: 0.5).isActive = true
+    refreshButton.widthAnchor.constraint(equalTo: middleBarBackground.heightAnchor, multiplier: 0.5).isActive = true
+    
+    middleBarBackground.addSubview(pauseButton)
+    pauseButton.centerXAnchor.constraint(equalTo: middleBarBackground.centerXAnchor).isActive = true
+    pauseButton.centerYAnchor.constraint(equalTo: middleBarBackground.centerYAnchor).isActive = true
+    pauseButton.heightAnchor.constraint(equalTo: middleBarBackground.heightAnchor, multiplier: 0.5).isActive = true
+    pauseButton.widthAnchor.constraint(equalTo: middleBarBackground.heightAnchor, multiplier: 0.5).isActive = true
+    
+    middleBarBackground.addSubview(settingsButton)
+    settingsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -UIScreen.main.bounds.width*0.2).isActive = true
+    settingsButton.centerYAnchor.constraint(equalTo: middleBarBackground.centerYAnchor).isActive = true
+    settingsButton.heightAnchor.constraint(equalTo: middleBarBackground.heightAnchor, multiplier: 0.5).isActive = true
+    settingsButton.widthAnchor.constraint(equalTo: middleBarBackground.heightAnchor, multiplier: 0.5).isActive = true
+    
+    
     bottomBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(bottomTimerClicked)))
     view.addSubview(bottomBackground)
     bottomBackground.topAnchor.constraint(equalTo: middleBarBackground.bottomAnchor).isActive = true
@@ -65,6 +108,7 @@ class ClockViewController: UIViewController {
     bottomBackground.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.45).isActive = true
     
     topTimerLabel = UILabel()
+    topTimerLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
     topTimerLabel?.text = "\(topTimerTimeRemaining)"
     topTimerLabel?.font = UIFont.boldSystemFont(ofSize: 80)
     topTimerLabel?.translatesAutoresizingMaskIntoConstraints = false
