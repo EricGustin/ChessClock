@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ClockViewController.swift
 //  ChessClock
 //
 //  Created by Eric Gustin on 7/17/20.
