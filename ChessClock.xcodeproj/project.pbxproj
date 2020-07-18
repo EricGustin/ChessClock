@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		FAB2E38124C2C70D00535BD8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2E38024C2C70D00535BD8 /* AppDelegate.swift */; };
 		FAB2E38324C2C70D00535BD8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2E38224C2C70D00535BD8 /* SceneDelegate.swift */; };
-		FAB2E38524C2C70D00535BD8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2E38424C2C70D00535BD8 /* ViewController.swift */; };
-		FAB2E38824C2C70D00535BD8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB2E38624C2C70D00535BD8 /* Main.storyboard */; };
+		FAB2E38524C2C70D00535BD8 /* ClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2E38424C2C70D00535BD8 /* ClockViewController.swift */; };
 		FAB2E38A24C2C70E00535BD8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAB2E38924C2C70E00535BD8 /* Assets.xcassets */; };
 		FAB2E38D24C2C70E00535BD8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB2E38B24C2C70E00535BD8 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -19,8 +18,7 @@
 		FAB2E37D24C2C70D00535BD8 /* ChessClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAB2E38024C2C70D00535BD8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAB2E38224C2C70D00535BD8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FAB2E38424C2C70D00535BD8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		FAB2E38724C2C70D00535BD8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FAB2E38424C2C70D00535BD8 /* ClockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockViewController.swift; sourceTree = "<group>"; };
 		FAB2E38924C2C70E00535BD8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAB2E38C24C2C70E00535BD8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAB2E38E24C2C70E00535BD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,8 +56,7 @@
 			children = (
 				FAB2E38024C2C70D00535BD8 /* AppDelegate.swift */,
 				FAB2E38224C2C70D00535BD8 /* SceneDelegate.swift */,
-				FAB2E38424C2C70D00535BD8 /* ViewController.swift */,
-				FAB2E38624C2C70D00535BD8 /* Main.storyboard */,
+				FAB2E38424C2C70D00535BD8 /* ClockViewController.swift */,
 				FAB2E38924C2C70E00535BD8 /* Assets.xcassets */,
 				FAB2E38B24C2C70E00535BD8 /* LaunchScreen.storyboard */,
 				FAB2E38E24C2C70E00535BD8 /* Info.plist */,
@@ -127,7 +124,6 @@
 			files = (
 				FAB2E38D24C2C70E00535BD8 /* LaunchScreen.storyboard in Resources */,
 				FAB2E38A24C2C70E00535BD8 /* Assets.xcassets in Resources */,
-				FAB2E38824C2C70D00535BD8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +134,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAB2E38524C2C70D00535BD8 /* ViewController.swift in Sources */,
+				FAB2E38524C2C70D00535BD8 /* ClockViewController.swift in Sources */,
 				FAB2E38124C2C70D00535BD8 /* AppDelegate.swift in Sources */,
 				FAB2E38324C2C70D00535BD8 /* SceneDelegate.swift in Sources */,
 			);
@@ -147,14 +143,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		FAB2E38624C2C70D00535BD8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FAB2E38724C2C70D00535BD8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		FAB2E38B24C2C70E00535BD8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
