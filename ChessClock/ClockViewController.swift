@@ -64,6 +64,12 @@ class ClockViewController: UIViewController {
   private var bottomTimerLabel: UILabel?
   private var bottomTimer: Timer?
   
+  private var topTurnCount = 0
+  private var topTurnCountLabel: UILabel?
+  
+  private var bottomTurnCount = 0
+  private var bottomTurnCountLabel: UILabel?
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -125,6 +131,24 @@ class ClockViewController: UIViewController {
     bottomBackground.addSubview(bottomTimerLabel!)
     bottomTimerLabel!.centerXAnchor.constraint(equalTo: bottomBackground.centerXAnchor).isActive = true
     bottomTimerLabel!.centerYAnchor.constraint(equalTo: bottomBackground.centerYAnchor).isActive = true
+    
+    topTurnCountLabel = UILabel()
+    topTurnCountLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+    topTurnCountLabel?.text = "\(topTurnCount)"
+    topTurnCountLabel?.textColor = UIColor(red: 60/255, green: 60/255, blue: 60/255, alpha: 1)
+    topTurnCountLabel?.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(topTurnCountLabel!)
+    topTurnCountLabel?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+    topTurnCountLabel?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
+    
+    bottomTurnCountLabel = UILabel()
+    bottomTurnCountLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+    bottomTurnCountLabel?.text = "\(bottomTurnCount)"
+    bottomTurnCountLabel?.textColor = UIColor(red: 60/255, green: 60/255, blue: 60/255, alpha: 1)
+    bottomTurnCountLabel?.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(bottomTurnCountLabel!)
+    bottomTurnCountLabel?.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+    bottomTurnCountLabel?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
   }
   
   @objc func topCounter() {
@@ -146,6 +170,8 @@ class ClockViewController: UIViewController {
     bottomTimerLabel?.textColor = .black
     bottomTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(bottomCounter), userInfo: nil, repeats: true)
     topTimer?.invalidate()
+    topTurnCount += 1
+    topTurnCountLabel?.text = "\(topTurnCount)"
   }
   
   @objc func bottomTimerClicked() {
@@ -157,6 +183,8 @@ class ClockViewController: UIViewController {
     topTimerLabel?.textColor = .black
     topTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(topCounter), userInfo: nil, repeats: true)
     bottomTimer?.invalidate()
+    bottomTurnCount += 1
+    bottomTurnCountLabel?.text = "\(topTurnCount)"
   }
   
   @objc func pauseButtonClicked() {
