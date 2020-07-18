@@ -56,10 +56,12 @@ class ClockViewController: UIViewController {
     return view
   }()
   
+  var topTimerInitialTime = 60.0
   private var topTimerTimeRemaining = 60.0
   private var topTimerLabel: UILabel?
   private var topTimer: Timer?
   
+  var bottomTimerInitialTime = 60.0
   private var bottomTimerTimeRemaining = 60.0
   private var bottomTimerLabel: UILabel?
   private var bottomTimer: Timer?
@@ -89,13 +91,14 @@ class ClockViewController: UIViewController {
     middleBarBackground.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     middleBarBackground.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
     
+    refreshButton.addTarget(self, action: #selector(refreshButtonClicked), for: .touchUpInside)
     middleBarBackground.addSubview(refreshButton)
     refreshButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: UIScreen.main.bounds.width*0.2).isActive = true
     refreshButton.centerYAnchor.constraint(equalTo: middleBarBackground.centerYAnchor).isActive = true
     refreshButton.heightAnchor.constraint(equalTo: middleBarBackground.heightAnchor, multiplier: 0.5).isActive = true
     refreshButton.widthAnchor.constraint(equalTo: middleBarBackground.heightAnchor, multiplier: 0.5).isActive = true
     
-    pauseButton.addTarget(self, action: #selector(pauseButtonClicked), for: .touchUpInside)
+    pauseButton.addTarget(self, action: #selector(pause), for: .touchUpInside)
     middleBarBackground.addSubview(pauseButton)
     pauseButton.centerXAnchor.constraint(equalTo: middleBarBackground.centerXAnchor).isActive = true
     pauseButton.centerYAnchor.constraint(equalTo: middleBarBackground.centerYAnchor).isActive = true
@@ -187,7 +190,7 @@ class ClockViewController: UIViewController {
     bottomTurnCountLabel?.text = "\(topTurnCount)"
   }
   
-  @objc func pauseButtonClicked() {
+  @objc func pause() {
     pauseButton.isHidden = true
     topTimer?.invalidate()
     bottomTimer?.invalidate()
@@ -195,6 +198,33 @@ class ClockViewController: UIViewController {
     bottomBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
     topTimerLabel?.textColor = .black
     bottomTimerLabel?.textColor = .black
+  }
+  
+  @objc func refreshButtonClicked() {
+    let resetAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+    let cancelAction = UIAlertAction(title: "Reset", style: .default) { (action) in
+      self.reset()
+    }
+    cancelAction.setValue(UIColor.red, forKey: "titleTextColor")
+    let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    alert.addAction(resetAction)
+    alert.addAction(cancelAction)
+    
+    pause()
+    
+    self.present(alert, animated: true, completion: nil)
+  }
+  
+  private func reset() {
+    pause() // sets a lot of the views to their original state
+    topTurnCount = 0
+    bottomTurnCount = 0
+    topTurnCountLabel?.text = "\(topTurnCount)"
+    bottomTurnCountLabel?.text = "\(bottomTurnCount)"
+    topTimerTimeRemaining = topTimerInitialTime
+    bottomTimerTimeRemaining = bottomTimerInitialTime
+    topTimerLabel?.text = "\(topTimerTimeRemaining)"
+    bottomTimerLabel?.text = "\(bottomTimerTimeRemaining)"
   }
   
 }
