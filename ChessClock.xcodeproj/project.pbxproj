@@ -12,6 +12,9 @@
 		FAB2E38524C2C70D00535BD8 /* ClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2E38424C2C70D00535BD8 /* ClockViewController.swift */; };
 		FAB2E38A24C2C70E00535BD8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAB2E38924C2C70E00535BD8 /* Assets.xcassets */; };
 		FAB2E38D24C2C70E00535BD8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB2E38B24C2C70E00535BD8 /* LaunchScreen.storyboard */; };
+		FAB2E39624C3E21D00535BD8 /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = FAB2E39524C3E21D00535BD8 /* click.wav */; };
+		FAB2E39824C3EAAB00535BD8 /* gameOver.wav in Resources */ = {isa = PBXBuildFile; fileRef = FAB2E39724C3EAAB00535BD8 /* gameOver.wav */; };
+		FAB2E39C24C3EEB900535BD8 /* pauseButton.wav in Resources */ = {isa = PBXBuildFile; fileRef = FAB2E39B24C3EEB900535BD8 /* pauseButton.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		FAB2E38924C2C70E00535BD8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAB2E38C24C2C70E00535BD8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAB2E38E24C2C70E00535BD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAB2E39524C3E21D00535BD8 /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
+		FAB2E39724C3EAAB00535BD8 /* gameOver.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gameOver.wav; sourceTree = "<group>"; };
+		FAB2E39B24C3EEB900535BD8 /* pauseButton.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pauseButton.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +60,7 @@
 		FAB2E37F24C2C70D00535BD8 /* ChessClock */ = {
 			isa = PBXGroup;
 			children = (
+				FAB2E39424C3E1B800535BD8 /* Sounds */,
 				FAB2E38024C2C70D00535BD8 /* AppDelegate.swift */,
 				FAB2E38224C2C70D00535BD8 /* SceneDelegate.swift */,
 				FAB2E38424C2C70D00535BD8 /* ClockViewController.swift */,
@@ -62,6 +69,16 @@
 				FAB2E38E24C2C70E00535BD8 /* Info.plist */,
 			);
 			path = ChessClock;
+			sourceTree = "<group>";
+		};
+		FAB2E39424C3E1B800535BD8 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				FAB2E39B24C3EEB900535BD8 /* pauseButton.wav */,
+				FAB2E39724C3EAAB00535BD8 /* gameOver.wav */,
+				FAB2E39524C3E21D00535BD8 /* click.wav */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,8 +139,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB2E39624C3E21D00535BD8 /* click.wav in Resources */,
 				FAB2E38D24C2C70E00535BD8 /* LaunchScreen.storyboard in Resources */,
+				FAB2E39824C3EAAB00535BD8 /* gameOver.wav in Resources */,
 				FAB2E38A24C2C70E00535BD8 /* Assets.xcassets in Resources */,
+				FAB2E39C24C3EEB900535BD8 /* pauseButton.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +295,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X6KK3Y5QZJ;
 				INFOPLIST_FILE = ChessClock/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -293,6 +314,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X6KK3Y5QZJ;
 				INFOPLIST_FILE = ChessClock/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ClockViewController: UIViewController {
   
@@ -61,8 +62,8 @@ class ClockViewController: UIViewController {
   private var topTimerLabel: UILabel?
   private var topTimer: Timer?
   
-  var bottomTimerInitialTime = 300.0
-  private var bottomTimerTimeRemaining = 300.0
+  var bottomTimerInitialTime = 10.0
+  private var bottomTimerTimeRemaining = 10.0
   private var bottomTimerLabel: UILabel?
   private var bottomTimer: Timer?
   
@@ -72,6 +73,7 @@ class ClockViewController: UIViewController {
   private var bottomTurnCount = 0
   private var bottomTurnCountLabel: UILabel?
   
+  private var audioPlayer: AVAudioPlayer!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -172,6 +174,7 @@ class ClockViewController: UIViewController {
   
   @objc func topCounterClicked() {
     if bottomTimer != nil && bottomTimer!.isValid { return }
+    playSound(nameOfSound: "click")
     pauseButton.isHidden = false
     bottomBackground.backgroundColor = .brown
     bottomTimerLabel?.textColor = .white
@@ -185,6 +188,7 @@ class ClockViewController: UIViewController {
   
   @objc func bottomTimerClicked() {
     if topTimer != nil && topTimer!.isValid { return }
+    playSound(nameOfSound: "click")
     pauseButton.isHidden = false
     topBackground.backgroundColor = .brown
     topTimerLabel?.textColor = .white
@@ -197,6 +201,7 @@ class ClockViewController: UIViewController {
   }
   
   @objc func pause() {
+    playSound(nameOfSound: "pauseButton")
     pauseButton.isHidden = true
     topTimer?.invalidate()
     bottomTimer?.invalidate()
@@ -238,6 +243,8 @@ class ClockViewController: UIViewController {
     bottomTimerTimeRemaining = bottomTimerInitialTime
     formatTimeRemaining(timeRemaining: topTimerTimeRemaining, timerLabel: topTimerLabel!)
     formatTimeRemaining(timeRemaining: bottomTimerTimeRemaining, timerLabel: bottomTimerLabel!)
+    topBackground.isUserInteractionEnabled = true
+    bottomBackground.isUserInteractionEnabled = true
   }
   
   private func formatTimeRemaining(timeRemaining: Double, timerLabel: UILabel) {
@@ -256,11 +263,25 @@ class ClockViewController: UIViewController {
   }
   
   private func gameOver(loserBackground: UIView, loserLabel: UILabel) {
+    playSound(nameOfSound: "gameOver")
     topTimer?.invalidate()
     bottomTimer?.invalidate()
     loserBackground.backgroundColor = .red
     loserLabel.textColor = .white
     pauseButton.isHidden = true
+    topBackground.isUserInteractionEnabled = false
+    bottomBackground.isUserInteractionEnabled = false
+  }
+  
+  private func playSound(nameOfSound: String) {
+    guard let pathToSound = Bundle.main.path(forResource: nameOfSound, ofType: "wav") else { return }
+    let url = URL(fileURLWithPath: pathToSound)
+    do {
+      audioPlayer = try AVAudioPlayer(contentsOf: url)
+      audioPlayer.play()
+    } catch {
+      print("Error when trying to play click sound")
+    }
   }
   
 }
