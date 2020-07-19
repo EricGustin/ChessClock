@@ -9,7 +9,7 @@
 import UIKit
 
 class ClockViewController: UIViewController {
-
+  
   let topBackground: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
@@ -56,8 +56,8 @@ class ClockViewController: UIViewController {
     return view
   }()
   
-  var topTimerInitialTime = 10.0
-  private var topTimerTimeRemaining = 10.0
+  var topTimerInitialTime = 5401.0
+  private var topTimerTimeRemaining = 5401.0
   private var topTimerLabel: UILabel?
   private var topTimer: Timer?
   
@@ -120,7 +120,7 @@ class ClockViewController: UIViewController {
     
     topTimerLabel = UILabel()
     topTimerLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-    topTimerLabel?.text = "\(topTimerTimeRemaining)"
+    formatTimeRemaining(timeRemaining: topTimerTimeRemaining, timerLabel: topTimerLabel!)
     topTimerLabel?.font = UIFont.boldSystemFont(ofSize: 80)
     topTimerLabel?.translatesAutoresizingMaskIntoConstraints = false
     topBackground.addSubview(topTimerLabel!)
@@ -128,7 +128,7 @@ class ClockViewController: UIViewController {
     topTimerLabel!.centerYAnchor.constraint(equalTo: topBackground.centerYAnchor).isActive = true
     
     bottomTimerLabel = UILabel()
-    bottomTimerLabel?.text = "\(bottomTimerTimeRemaining)"
+    formatTimeRemaining(timeRemaining: bottomTimerTimeRemaining, timerLabel: bottomTimerLabel!)
     bottomTimerLabel?.font = UIFont.boldSystemFont(ofSize: 80)
     bottomTimerLabel?.translatesAutoresizingMaskIntoConstraints = false
     bottomBackground.addSubview(bottomTimerLabel!)
@@ -156,24 +156,13 @@ class ClockViewController: UIViewController {
   
   @objc func topCounter() {
     topTimerTimeRemaining -= 0.1
-    if topTimerTimeRemaining >= 10 {
-      let minutes = Int(topTimerTimeRemaining / 60)
-      let seconds = Int(topTimerTimeRemaining) % 60
-      topTimerLabel?.text = "\(minutes):\(seconds)"
-    } else {
-      topTimerLabel?.text = String(format: "0:0%.1f", topTimerTimeRemaining)
-    }
+    formatTimeRemaining(timeRemaining: topTimerTimeRemaining, timerLabel: topTimerLabel!)
   }
   
   @objc func bottomCounter() {
+    
     bottomTimerTimeRemaining -= 0.1
-    if bottomTimerTimeRemaining >= 10 {
-      let minutes = Int(bottomTimerTimeRemaining / 60)
-      let seconds = Int(bottomTimerTimeRemaining) % 60
-      bottomTimerLabel?.text = "\(minutes):\(seconds)"
-    } else {
-      bottomTimerLabel?.text = String(format: "0:0%.1f", bottomTimerTimeRemaining)
-    }
+    formatTimeRemaining(timeRemaining: bottomTimerTimeRemaining, timerLabel: bottomTimerLabel!)
   }
   
   @objc func topCounterClicked() {
@@ -237,6 +226,21 @@ class ClockViewController: UIViewController {
     bottomTimerTimeRemaining = bottomTimerInitialTime
     topTimerLabel?.text = "\(topTimerTimeRemaining)"
     bottomTimerLabel?.text = "\(bottomTimerTimeRemaining)"
+  }
+  
+  private func formatTimeRemaining(timeRemaining: Double, timerLabel: UILabel) {
+    let hours = timeRemaining / 3600
+    let minutes = hours.truncatingRemainder(dividingBy: 1) * 60
+    let seconds = minutes.truncatingRemainder(dividingBy: 1) * 60
+    let decaseconds = seconds.truncatingRemainder(dividingBy: 1) * 10
+    
+    if hours >= 1 {
+      timerLabel.text = String(format: "%d:%02d:%02d", Int(hours), Int(minutes), Int(seconds))
+    } else if minutes >= 1 || seconds >= 10 {
+      timerLabel.text = String(format: "%d:%02d", Int(minutes), Int(seconds))
+    } else {
+      timerLabel.text = String(format: "%d:%02d:%d", Int(minutes), Int(seconds), Int(decaseconds))
+    }
   }
   
 }
