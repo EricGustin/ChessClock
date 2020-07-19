@@ -13,14 +13,14 @@ class ClockViewController: UIViewController {
   
   let topBackground: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    view.backgroundColor = StandardColors.customLightGray
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
   
   let middleBarBackground: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor(red: 60/255, green: 60/255, blue: 60/255, alpha: 1)
+    view.backgroundColor = StandardColors.customDarkGray
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
@@ -28,7 +28,7 @@ class ClockViewController: UIViewController {
   let refreshButton: UIButton = {
     let button = UIButton()
     button.setBackgroundImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-    button.tintColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    button.tintColor = StandardColors.customLightGray
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()
@@ -37,7 +37,7 @@ class ClockViewController: UIViewController {
     let button = UIButton()
     button.isHidden = true
     button.setBackgroundImage(UIImage(systemName: "pause.fill"), for: .normal)
-    button.tintColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    button.tintColor = StandardColors.customLightGray
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()
@@ -45,14 +45,14 @@ class ClockViewController: UIViewController {
   let settingsButton: UIButton = {
     let button = UIButton()
     button.setBackgroundImage(UIImage(systemName: "gear"), for: .normal)
-    button.tintColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    button.tintColor = StandardColors.customLightGray
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()
   
   let bottomBackground: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    view.backgroundColor = StandardColors.customLightGray
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
@@ -74,6 +74,16 @@ class ClockViewController: UIViewController {
   private var bottomTurnCountLabel: UILabel?
   
   private var audioPlayer: AVAudioPlayer!
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+    navigationController?.setNavigationBarHidden(true, animated: true)
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(true)
+    navigationController?.setNavigationBarHidden(false, animated: true)
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -107,6 +117,7 @@ class ClockViewController: UIViewController {
     pauseButton.heightAnchor.constraint(equalTo: middleBarBackground.heightAnchor, multiplier: 0.5).isActive = true
     pauseButton.widthAnchor.constraint(equalTo: middleBarBackground.heightAnchor, multiplier: 0.5).isActive = true
     
+    settingsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(settingsButtonClicked)))
     middleBarBackground.addSubview(settingsButton)
     settingsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -UIScreen.main.bounds.width*0.2).isActive = true
     settingsButton.centerYAnchor.constraint(equalTo: middleBarBackground.centerYAnchor).isActive = true
@@ -140,7 +151,7 @@ class ClockViewController: UIViewController {
     topTurnCountLabel = UILabel()
     topTurnCountLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
     topTurnCountLabel?.text = "\(topTurnCount)"
-    topTurnCountLabel?.textColor = UIColor(red: 60/255, green: 60/255, blue: 60/255, alpha: 1)
+    topTurnCountLabel?.textColor = StandardColors.customDarkGray
     topTurnCountLabel?.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(topTurnCountLabel!)
     topTurnCountLabel?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
@@ -149,7 +160,7 @@ class ClockViewController: UIViewController {
     bottomTurnCountLabel = UILabel()
     bottomTurnCountLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
     bottomTurnCountLabel?.text = "\(bottomTurnCount)"
-    bottomTurnCountLabel?.textColor = UIColor(red: 60/255, green: 60/255, blue: 60/255, alpha: 1)
+    bottomTurnCountLabel?.textColor = StandardColors.customDarkGray
     bottomTurnCountLabel?.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(bottomTurnCountLabel!)
     bottomTurnCountLabel?.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
@@ -178,7 +189,7 @@ class ClockViewController: UIViewController {
     pauseButton.isHidden = false
     bottomBackground.backgroundColor = .brown
     bottomTimerLabel?.textColor = .white
-    topBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    topBackground.backgroundColor = StandardColors.customLightGray
     topTimerLabel?.textColor = .black
     bottomTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(bottomCounter), userInfo: nil, repeats: true)
     topTimer?.invalidate()
@@ -192,7 +203,7 @@ class ClockViewController: UIViewController {
     pauseButton.isHidden = false
     topBackground.backgroundColor = .brown
     topTimerLabel?.textColor = .white
-    bottomBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    bottomBackground.backgroundColor = StandardColors.customLightGray
     bottomTimerLabel?.textColor = .black
     topTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(topCounter), userInfo: nil, repeats: true)
     bottomTimer?.invalidate()
@@ -205,14 +216,20 @@ class ClockViewController: UIViewController {
     pauseButton.isHidden = true
     topTimer?.invalidate()
     bottomTimer?.invalidate()
-    topBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
-    bottomBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    topBackground.backgroundColor = StandardColors.customLightGray
+    bottomBackground.backgroundColor = StandardColors.customLightGray
     topTimerLabel?.textColor = .black
     bottomTimerLabel?.textColor = .black
   }
   
   @objc func refreshButtonClicked() {
-    pause()
+    pauseButton.isHidden = true
+    topTimer?.invalidate()
+    bottomTimer?.invalidate()
+    topBackground.backgroundColor = StandardColors.customLightGray
+    bottomBackground.backgroundColor = StandardColors.customLightGray
+    topTimerLabel?.textColor = .black
+    bottomTimerLabel?.textColor = .black
     if topTimerTimeRemaining <= 0 {
       topBackground.backgroundColor = .red
       topTimerLabel?.textColor = .white
@@ -284,5 +301,8 @@ class ClockViewController: UIViewController {
     }
   }
   
+  @objc func settingsButtonClicked() {
+    navigationController?.pushViewController(SettingsViewController(), animated: true)
+  }
+  
 }
-

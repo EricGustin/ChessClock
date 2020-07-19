@@ -22,7 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     window?.windowScene = windowScene
     window?.makeKeyAndVisible()
     let vc = ClockViewController()
-    window?.rootViewController = vc
+    let nc = NavigationController(vc)
+    window?.rootViewController = nc
   }
 
   func sceneDidDisconnect(_ scene: UIScene) {
