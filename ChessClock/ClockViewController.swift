@@ -56,13 +56,13 @@ class ClockViewController: UIViewController {
     return view
   }()
   
-  var topTimerInitialTime = 5401.0
-  private var topTimerTimeRemaining = 5401.0
+  var topTimerInitialTime = 10.0
+  private var topTimerTimeRemaining = 10.0
   private var topTimerLabel: UILabel?
   private var topTimer: Timer?
   
-  var bottomTimerInitialTime = 120.0
-  private var bottomTimerTimeRemaining = 120.0
+  var bottomTimerInitialTime = 300.0
+  private var bottomTimerTimeRemaining = 300.0
   private var bottomTimerLabel: UILabel?
   private var bottomTimer: Timer?
   
@@ -157,21 +157,26 @@ class ClockViewController: UIViewController {
   @objc func topCounter() {
     topTimerTimeRemaining -= 0.1
     formatTimeRemaining(timeRemaining: topTimerTimeRemaining, timerLabel: topTimerLabel!)
+    if topTimerTimeRemaining <= 0.0 {
+      gameOver(loserBackground: topBackground, loserLabel: topTimerLabel!)
+    }
   }
   
   @objc func bottomCounter() {
-    
     bottomTimerTimeRemaining -= 0.1
     formatTimeRemaining(timeRemaining: bottomTimerTimeRemaining, timerLabel: bottomTimerLabel!)
+    if bottomTimerTimeRemaining <= 0.0 {
+      gameOver(loserBackground: bottomBackground, loserLabel: bottomTimerLabel!)
+    }
   }
   
   @objc func topCounterClicked() {
     if bottomTimer != nil && bottomTimer!.isValid { return }
     pauseButton.isHidden = false
-    topBackground.backgroundColor = .brown
-    topTimerLabel?.textColor = .white
-    bottomBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
-    bottomTimerLabel?.textColor = .black
+    bottomBackground.backgroundColor = .brown
+    bottomTimerLabel?.textColor = .white
+    topBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    topTimerLabel?.textColor = .black
     bottomTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(bottomCounter), userInfo: nil, repeats: true)
     topTimer?.invalidate()
     topTurnCount += 1
@@ -181,10 +186,10 @@ class ClockViewController: UIViewController {
   @objc func bottomTimerClicked() {
     if topTimer != nil && topTimer!.isValid { return }
     pauseButton.isHidden = false
-    bottomBackground.backgroundColor = .brown
-    bottomTimerLabel?.textColor = .white
-    topBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
-    topTimerLabel?.textColor = .black
+    topBackground.backgroundColor = .brown
+    topTimerLabel?.textColor = .white
+    bottomBackground.backgroundColor = UIColor(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+    bottomTimerLabel?.textColor = .black
     topTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(topCounter), userInfo: nil, repeats: true)
     bottomTimer?.invalidate()
     bottomTurnCount += 1
@@ -202,6 +207,15 @@ class ClockViewController: UIViewController {
   }
   
   @objc func refreshButtonClicked() {
+    pause()
+    if topTimerTimeRemaining <= 0 {
+      topBackground.backgroundColor = .red
+      topTimerLabel?.textColor = .white
+    } else if bottomTimerTimeRemaining <= 0 {
+      bottomBackground.backgroundColor = .red
+      bottomTimerLabel?.textColor = .white
+    }
+    
     let resetAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
     let cancelAction = UIAlertAction(title: "Reset", style: .default) { (action) in
       self.reset()
@@ -210,8 +224,6 @@ class ClockViewController: UIViewController {
     let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     alert.addAction(resetAction)
     alert.addAction(cancelAction)
-    
-    pause()
     
     self.present(alert, animated: true, completion: nil)
   }
@@ -224,8 +236,8 @@ class ClockViewController: UIViewController {
     bottomTurnCountLabel?.text = "\(bottomTurnCount)"
     topTimerTimeRemaining = topTimerInitialTime
     bottomTimerTimeRemaining = bottomTimerInitialTime
-    topTimerLabel?.text = "\(topTimerTimeRemaining)"
-    bottomTimerLabel?.text = "\(bottomTimerTimeRemaining)"
+    formatTimeRemaining(timeRemaining: topTimerTimeRemaining, timerLabel: topTimerLabel!)
+    formatTimeRemaining(timeRemaining: bottomTimerTimeRemaining, timerLabel: bottomTimerLabel!)
   }
   
   private func formatTimeRemaining(timeRemaining: Double, timerLabel: UILabel) {
@@ -241,6 +253,14 @@ class ClockViewController: UIViewController {
     } else {
       timerLabel.text = String(format: "%d:%02d:%d", Int(minutes), Int(seconds), Int(decaseconds))
     }
+  }
+  
+  private func gameOver(loserBackground: UIView, loserLabel: UILabel) {
+    topTimer?.invalidate()
+    bottomTimer?.invalidate()
+    loserBackground.backgroundColor = .red
+    loserLabel.textColor = .white
+    pauseButton.isHidden = true
   }
   
 }
