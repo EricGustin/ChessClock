@@ -57,13 +57,13 @@ class ClockViewController: UIViewController {
     return view
   }()
   
-  var topTimerInitialTime = 10.0
-  private var topTimerTimeRemaining = 10.0
+  var topTimerInitialTime = 300.0
+  private var topTimerTimeRemaining = 300.0
   private var topTimerLabel: UILabel?
   private var topTimer: Timer?
   
-  var bottomTimerInitialTime = 10.0
-  private var bottomTimerTimeRemaining = 10.0
+  var bottomTimerInitialTime = 300.0
+  private var bottomTimerTimeRemaining = 300.0
   private var bottomTimerLabel: UILabel?
   private var bottomTimer: Timer?
   
@@ -133,7 +133,11 @@ class ClockViewController: UIViewController {
     
     topTimerLabel = UILabel()
     topTimerLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-    formatTimeRemaining(timeRemaining: topTimerTimeRemaining, timerLabel: topTimerLabel!)
+    if (UserDefaults.standard.double(forKey: "topTimerInitialTime") != 0.0) {
+      formatTimeRemaining(timeRemaining: UserDefaults.standard.double(forKey: "topTimerInitialTime"), timerLabel: topTimerLabel!)
+    } else {
+      formatTimeRemaining(timeRemaining: topTimerTimeRemaining, timerLabel: topTimerLabel!)
+    }
     topTimerLabel?.font = UIFont.boldSystemFont(ofSize: 80)
     topTimerLabel?.translatesAutoresizingMaskIntoConstraints = false
     topBackground.addSubview(topTimerLabel!)
