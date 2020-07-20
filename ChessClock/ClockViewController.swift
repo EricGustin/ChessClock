@@ -58,12 +58,12 @@ class ClockViewController: UIViewController {
   }()
   
   var topTimerInitialTime = 300.0
-  private var topTimerTimeRemaining = 300.0
+  var topTimerTimeRemaining = 300.0
   private var topTimerLabel: UILabel?
   private var topTimer: Timer?
   
   var bottomTimerInitialTime = 300.0
-  private var bottomTimerTimeRemaining = 300.0
+  var bottomTimerTimeRemaining = 300.0
   private var bottomTimerLabel: UILabel?
   private var bottomTimer: Timer?
   
@@ -78,6 +78,9 @@ class ClockViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
     navigationController?.setNavigationBarHidden(true, animated: true)
+    
+    formatTimeRemaining(timeRemaining: topTimerTimeRemaining, timerLabel: topTimerLabel!)
+    formatTimeRemaining(timeRemaining: bottomTimerTimeRemaining, timerLabel: bottomTimerLabel!)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -91,6 +94,7 @@ class ClockViewController: UIViewController {
   }
 
   private func setUpSubviews() {
+    
     
     topBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(topCounterClicked)))
     view.addSubview(topBackground)
@@ -130,14 +134,9 @@ class ClockViewController: UIViewController {
     bottomBackground.topAnchor.constraint(equalTo: middleBarBackground.bottomAnchor).isActive = true
     bottomBackground.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     bottomBackground.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.45).isActive = true
-    
     topTimerLabel = UILabel()
     topTimerLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-    if (UserDefaults.standard.double(forKey: "topTimerInitialTime") != 0.0) {
-      formatTimeRemaining(timeRemaining: UserDefaults.standard.double(forKey: "topTimerInitialTime"), timerLabel: topTimerLabel!)
-    } else {
-      formatTimeRemaining(timeRemaining: topTimerTimeRemaining, timerLabel: topTimerLabel!)
-    }
+    formatTimeRemaining(timeRemaining: topTimerTimeRemaining, timerLabel: topTimerLabel!)
     topTimerLabel?.font = UIFont.boldSystemFont(ofSize: 80)
     topTimerLabel?.translatesAutoresizingMaskIntoConstraints = false
     topBackground.addSubview(topTimerLabel!)
@@ -306,7 +305,8 @@ class ClockViewController: UIViewController {
   }
   
   @objc func settingsButtonClicked() {
-    navigationController?.pushViewController(SettingsViewController(), animated: true)
+    pause()
+    navigationController?.pushViewController(SettingsViewController(self), animated: true)
   }
   
 }

@@ -10,9 +10,20 @@ import UIKit
 
 class SettingsViewController: UIViewController {
   
+  private var clockViewController: ClockViewController!
   private var tableView: UITableView!
   private var timeControlLabels: [String]!
   private var startButton: UIButton!
+  private var initalTimes = [60.0, 180.0, 300.0, 600.0, 900.0, 1800.0, 3600.0, 7200.0]
+  
+  init(_ clockVC: ClockViewController) {
+    super.init(nibName: nil, bundle: nil)
+    self.clockViewController = clockVC
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -25,7 +36,7 @@ class SettingsViewController: UIViewController {
   }
   
   private func setUpSubview() {
-    timeControlLabels = ["3 min", "3 min | 2 sec", "5 min", "15 min | 2 sec"]
+    timeControlLabels = ["1 min", "3 min", "5 min", "10 min", "15 min", "30 min", "1 hour", "2 hours"]
 
     tableView = UITableView()
     tableView.backgroundColor = StandardColors.customDarkGray
@@ -55,6 +66,11 @@ class SettingsViewController: UIViewController {
   }
   
   @objc func startButtonClicked() {
+    clockViewController.topTimerInitialTime = initalTimes[tableView.indexPathForSelectedRow?.row ?? 2]
+    clockViewController.bottomTimerInitialTime = initalTimes[tableView.indexPathForSelectedRow?.row ?? 2]
+    clockViewController.topTimerTimeRemaining = clockViewController.topTimerInitialTime
+    clockViewController.bottomTimerTimeRemaining = clockViewController.bottomTimerInitialTime
+    
     navigationController?.popViewController(animated: true)
   }
   
