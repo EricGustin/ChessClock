@@ -67,10 +67,10 @@ class ClockViewController: UIViewController {
   private var bottomTimerLabel: UILabel?
   private var bottomTimer: Timer?
   
-  private var topTurnCount = 0
+  var topTurnCount = 0
   private var topTurnCountLabel: UILabel?
   
-  private var bottomTurnCount = 0
+  var bottomTurnCount = 0
   private var bottomTurnCountLabel: UILabel?
   
   private var audioPlayer: AVAudioPlayer!
@@ -81,6 +81,8 @@ class ClockViewController: UIViewController {
     
     formatTimeRemaining(timeRemaining: topTimerTimeRemaining, timerLabel: topTimerLabel!)
     formatTimeRemaining(timeRemaining: bottomTimerTimeRemaining, timerLabel: bottomTimerLabel!)
+    topTurnCountLabel?.text = "\(topTurnCount)"
+    bottomTurnCountLabel?.text = "\(bottomTurnCount)"
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -161,7 +163,6 @@ class ClockViewController: UIViewController {
     topTurnCountLabel?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
     
     bottomTurnCountLabel = UILabel()
-    bottomTurnCountLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
     bottomTurnCountLabel?.text = "\(bottomTurnCount)"
     bottomTurnCountLabel?.textColor = StandardColors.customDarkGray
     bottomTurnCountLabel?.translatesAutoresizingMaskIntoConstraints = false

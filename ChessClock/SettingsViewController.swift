@@ -70,7 +70,8 @@ class SettingsViewController: UIViewController {
     clockViewController.bottomTimerInitialTime = initalTimes[tableView.indexPathForSelectedRow?.row ?? 2]
     clockViewController.topTimerTimeRemaining = clockViewController.topTimerInitialTime
     clockViewController.bottomTimerTimeRemaining = clockViewController.bottomTimerInitialTime
-    
+    clockViewController.topTurnCount = 0
+    clockViewController.bottomTurnCount = 0
     navigationController?.popViewController(animated: true)
   }
   
